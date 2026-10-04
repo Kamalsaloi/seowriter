@@ -1,0 +1,1631 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens. Values come from the Paper file.
+   Mood: a press room at night. Black ink, white paper, one blue.
+------------------------------------------------------------------- */
+@theme {
+  /* One real breakpoint: below it the mobile design, from it the desktop design.
+     "mid" and "wide" only tidy a few details inside the desktop design. */
+  --breakpoint-*: initial;
+  --breakpoint-desk: 68.75rem; /* 1100px */
+  --breakpoint-mid: 80rem; /* 1280px */
+  --breakpoint-wide: 90rem; /* 1440px, the width the desktop design was drawn at */
+
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+
+  --color-*: initial;
+  --color-page: #0a0a0a;
+  --color-grey-1: #0f0f0f;
+  --color-grey-2: #111111;
+  --color-grey-3: #131313;
+  --color-grey-4: #171717;
+  --color-film: #070b18;
+
+  --color-text: #f5f5f5;
+  --color-soft: #a6a6a6;
+  --color-quiet: #7d7d7d;
+
+  --color-blue: #5b8dff;
+  --color-blue-16: #5b8dff29;
+  --color-blue-20: #5b8dff33;
+  --color-blue-40: #5b8dff66;
+  --color-blue-70: #5b8dffb3;
+  --color-green: #6fcf97;
+  /* The app screens only: a check that needs work, and one that fails. Both kept quiet. */
+  --color-amber: #d9a85c;
+  --color-red: #e07a70;
+
+  /* The text colour at a set strength, for type that sits on the blue film. */
+  --color-text-80: #f5f5f5cc;
+  --color-text-78: #f5f5f5c7;
+  --color-text-65: #f5f5f5a6;
+  --color-text-50: #f5f5f580;
+
+  /* White at a set strength: hairlines and the grey bars that stand in for text. */
+  --color-white-8: #ffffff14;
+  --color-white-10: #ffffff1a;
+  --color-white-12: #ffffff1f;
+  --color-white-14: #ffffff24;
+  --color-white-16: #ffffff29;
+  --color-white-18: #ffffff2e;
+  --color-white-24: #ffffff3d;
+  --color-white-28: #ffffff47;
+  --color-white-32: #ffffff52;
+  --color-white-40: #ffffff66;
+  --color-white-60: #ffffff99;
+
+  /* The page colour at a set strength: glass cards that sit on the pictures. */
+  --color-page-60: #0a0a0a99;
+  --color-page-80: #0a0a0acc;
+  --color-page-85: #0a0a0ad9;
+  --color-page-90: #0a0a0ae6;
+
+  --radius-*: initial;
+  --radius-sm: 8px;
+  --radius-btn: 10px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --text-*: initial;
+  --text-display: var(--display-size);
+  --text-display--line-height: var(--display-leading);
+  --text-display--letter-spacing: -0.035em;
+  --text-heading: var(--heading-size);
+  --text-heading--line-height: var(--heading-leading);
+  --text-heading--letter-spacing: -0.03em;
+  --text-lead: var(--lead-size);
+  --text-lead--line-height: var(--lead-leading);
+  --text-plan: 1.75rem;
+  --text-plan--line-height: 2.25rem;
+  --text-plan--letter-spacing: -0.02em;
+  --text-score: 2.5rem;
+  --text-score--line-height: 2.5rem;
+  --text-score--letter-spacing: -0.035em;
+  --text-title: 1.125rem;
+  --text-title--line-height: 1.75rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+  --text-ui: 0.9375rem;
+  --text-ui--line-height: 1.25rem;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.25rem;
+  /* The six group labels on the article screen. The reference sets them in capitals, and the
+     assignment says every label stays as given, so they are capitals here: small and spaced. */
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.25rem;
+  --text-label--letter-spacing: 0.06em;
+  /* Long reading text: the article on the article screen. */
+  --text-read: 1rem;
+  --text-read--line-height: 1.75rem;
+
+  --tracking-title: -0.01em;
+
+  /* Page rhythm. These change once, at the desktop breakpoint. */
+  --spacing-gutter: var(--gutter);
+  --spacing-section: var(--section-y);
+  --spacing-intro: var(--intro-gap);
+
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+:root {
+  --gutter: 1.5rem;
+  --section-y: 3rem;
+  --intro-gap: 2.5rem;
+
+  --display-size: 2.5rem;
+  --display-leading: 2.75rem;
+  --heading-size: 2rem;
+  --heading-leading: 2.375rem;
+  --lead-size: 1rem;
+  --lead-leading: 1.5rem;
+
+  /* The drawn product pictures shrink as one piece on narrow desktop widths. */
+  --art-zoom: 1;
+  /* The same for the phone screens in "How it works" on phones narrower than the 390px design. */
+  --phone-zoom: 1;
+}
+
+@media (max-width: 24.374rem) {
+  :root {
+    --phone-zoom: 0.948;
+  }
+}
+
+@media (max-width: 23.437rem) {
+  :root {
+    --phone-zoom: 0.897;
+  }
+}
+
+@media (max-width: 22.499rem) {
+  :root {
+    --phone-zoom: 0.842;
+  }
+}
+
+@media (max-width: 21.499rem) {
+  :root {
+    --phone-zoom: 0.76;
+  }
+}
+
+@media (min-width: 68.75rem) {
+  :root {
+    /* 96px at 1440 wide, easing down to 48px at 1280 and below. */
+    --gutter: clamp(3rem, calc(3rem + (100vw - 80rem) * 0.3), 6rem);
+    --section-y: 6rem;
+    --intro-gap: 4rem;
+
+    /* 64/68 and 44/50 at 1440 wide. Smaller windows scale the type, and the
+       heading widths are set in em, so the line breaks stay as designed. */
+    --display-size: clamp(3rem, 4.4444vw, 4rem);
+    --display-leading: calc(68 / 64);
+    --heading-size: clamp(2.25rem, 3.0556vw, 2.75rem);
+    --heading-leading: calc(50 / 44);
+    --lead-size: 1.125rem;
+    --lead-leading: 1.75rem;
+  }
+}
+
+@media (min-width: 68.75rem) and (max-width: 74.99rem) {
+  :root {
+    --art-zoom: 0.84;
+  }
+}
+
+@media (min-width: 75rem) and (max-width: 79.99rem) {
+  :root {
+    --art-zoom: 0.92;
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-page);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-page);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-blue-40);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Page shell: 1440 wide on desktop, one 560 column below the breakpoint.
+------------------------------------------------------------------- */
+@layer components {
+.shell {
+  width: 100%;
+  max-width: 35rem;
+  padding-inline: var(--gutter);
+}
+
+@media (min-width: 68.75rem) {
+  .shell {
+    max-width: 90rem;
+  }
+}
+
+.art-zoom {
+  zoom: var(--art-zoom);
+}
+
+.phone-zoom {
+  zoom: var(--phone-zoom);
+}
+
+/* 32px of film above the window, then the window. Height follows the zoom so the crop stays as drawn. */
+.phone-plate {
+  height: calc(32px + (var(--plate-h) - 32px) * var(--phone-zoom));
+}
+
+/* ------------------------------------------------------------------
+   Pictures. Crops and overlays are copied from Paper, because they were
+   tuned by hand. Do not round these numbers.
+------------------------------------------------------------------- */
+.film-plate {
+  background-color: var(--color-film);
+  background-image:
+    linear-gradient(
+      in oklab 180deg,
+      oklab(14.5% 0 0 / 80%) 0%,
+      oklab(14.5% 0 0 / 60%) 20%,
+      oklab(14.5% 0 0 / 0%) 50%
+    ),
+    url("/images/film-blue.webp");
+  background-origin: border-box;
+  background-position:
+    50%,
+    94% 9%;
+  background-repeat: no-repeat;
+  background-size:
+    cover,
+    auto 220%;
+}
+
+@media (min-width: 68.75rem) {
+  .film-plate {
+    background-image:
+      linear-gradient(
+        in oklab 90deg,
+        oklab(14.5% 0 0 / 80%) 0%,
+        oklab(14.5% 0 0 / 60%) 20%,
+        oklab(14.5% 0 0 / 0%) 50%
+      ),
+      url("/images/film-blue.webp");
+    background-position:
+      50%,
+      75% 12%;
+    background-size:
+      cover,
+      max(135%, var(--film-floor, 0px));
+  }
+}
+
+/* Below 1440 the film keeps the size it has in the design (135% of 1248px),
+   so a narrower plate never uncovers the bright spot low in the picture. */
+@media (min-width: 68.75rem) and (max-width: 89.99rem) {
+  .film-plate {
+    --film-floor: 1684.8px;
+  }
+
+  .film-crop {
+    --film-floor: 1248px;
+  }
+
+  .film-footer {
+    --film-floor: 2304px;
+  }
+}
+
+/* The four stacked step pictures on mobile. Each one shows another part of the film. */
+.film-step {
+  background-color: var(--color-film);
+  background-image:
+    linear-gradient(in oklab 180deg, oklab(14.5% 0 0 / 60%) 0%, oklab(14.5% 0 0 / 0%) 50%),
+    url("/images/film-blue.webp");
+  background-origin: border-box;
+  background-position:
+    50%,
+    var(--film-pos, 94% 9%);
+  background-repeat: no-repeat;
+  background-size:
+    cover,
+    auto 220%;
+}
+
+.film-crop {
+  background-color: var(--color-film);
+  background-image: url("/images/film-blue.webp");
+  background-position: 66% 8%;
+  background-repeat: no-repeat;
+  background-size: max(260%, var(--film-floor, 0px));
+}
+
+.film-footer {
+  background-color: var(--color-film);
+  background-image:
+    linear-gradient(
+      in oklab 180deg,
+      oklab(14.5% 0 0) 0%,
+      oklab(14.5% 0 0 / 80%) 28%,
+      oklab(14.5% 0 0 / 55%) 100%
+    ),
+    url("/images/film-blue.webp");
+  background-position:
+    50%,
+    94% 9%;
+  background-repeat: no-repeat;
+  background-size:
+    cover,
+    auto 220%;
+}
+
+@media (min-width: 68.75rem) {
+  .film-footer {
+    background-image:
+      linear-gradient(in oklab 180deg, oklab(14.5% 0 0) 0%, oklab(14.5% 0 0 / 0%) 40%),
+      url("/images/film-blue.webp");
+    background-position:
+      50%,
+      72% 0%;
+    background-size:
+      cover,
+      max(160%, var(--film-floor, 0px));
+  }
+}
+
+/* Photo with the heading on it. Mobile: the inner photo box carries the picture.
+   Desktop: the whole block carries it and the inner box dissolves. */
+.photo-block {
+  --photo-fade-m: linear-gradient(
+    in oklab 180deg,
+    oklab(14.5% 0 0 / 0%) 0%,
+    oklab(14.5% 0 0 / 0%) 38%,
+    oklab(14.5% 0 0 / 70%) 62%,
+    oklab(14.5% 0 0 / 95%) 82%,
+    oklab(14.5% 0 0) 100%
+  );
+}
+
+@media (max-width: 68.74rem) {
+  .photo-block-inner {
+    display: flex;
+    height: 352px;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: clip;
+    border-radius: 20px 20px 0 0;
+    background-color: var(--color-page);
+    background-image: var(--photo-fade-m), var(--photo);
+    background-position:
+      50%,
+      var(--photo-pos-m);
+    background-repeat: no-repeat;
+    background-size:
+      cover,
+      var(--photo-size-m);
+  }
+}
+
+@media (min-width: 68.75rem) {
+  .photo-block {
+    overflow: clip;
+    border-radius: 20px;
+    background-color: var(--color-page);
+    background-image: var(--photo-fade-d), var(--photo);
+    background-position:
+      50%,
+      var(--photo-pos-d);
+    background-repeat: no-repeat;
+    background-size:
+      cover,
+      var(--photo-size-d);
+  }
+
+  .photo-block-inner {
+    display: contents;
+  }
+}
+
+.photo-problem {
+  --photo: url("/images/photo-problem.webp");
+  --photo-pos-m: 84% 0px;
+  --photo-size-m: auto 86%;
+  --photo-fade-d: linear-gradient(
+    in oklab 90deg,
+    oklab(14.5% 0 0) 0%,
+    oklab(14.5% 0 0) 14%,
+    oklab(14.5% 0 0 / 85%) 30%,
+    oklab(14.5% 0 0 / 0%) 54%
+  );
+  --photo-pos-d: 100% 50%;
+  --photo-size-d: auto 100%;
+}
+
+.photo-cta {
+  --photo: url("/images/photo-cta.webp");
+  --photo-pos-m: 96% 0%;
+  --photo-size-m: auto 94%;
+  --photo-fade-d: linear-gradient(
+    in oklab 90deg,
+    oklab(14.5% 0 0) 0%,
+    oklab(14.5% 0 0 / 80%) 14%,
+    oklab(14.5% 0 0 / 50%) 30%,
+    oklab(14.5% 0 0 / 20%) 44%,
+    oklab(14.5% 0 0 / 0%) 56%
+  );
+  --photo-pos-d: 50% 40%;
+  --photo-size-d: cover;
+}
+
+/* Feature photos: one layer per feature, crossfaded. */
+.feature-photo {
+  background-color: var(--color-grey-3);
+  background-image:
+    linear-gradient(
+      in oklab 180deg,
+      oklab(14.5% 0 0 / 0%) 0%,
+      oklab(14.5% 0 0 / 0%) 44%,
+      oklab(14.5% 0 0 / 70%) 100%
+    ),
+    var(--photo);
+  background-position:
+    50%,
+    86% 50%;
+  background-size: cover;
+}
+
+@media (min-width: 68.75rem) {
+  .feature-photo {
+    background-image:
+      linear-gradient(in oklab 90deg, oklab(14.5% 0 0 / 70%) 0%, oklab(14.5% 0 0 / 0%) 56%),
+      var(--photo);
+    background-position:
+      50%,
+      70% 50%;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Hero 10: her at the laptop. One photo, and everything that sits on it
+   (the typed keyword, the thread, the article card) is placed in % of the
+   photo, so it stays on the laptop however the plate crops the picture.
+   The places were measured in the photo. Do not round these numbers.
+   Lengths in px here count the photo as 1376 by 768, its size in the Paper frame.
+------------------------------------------------------------------- */
+.laptop-plate {
+  /* Mobile: the photo is held at 0.7 of that size, so the keyword on the screen can still be read,
+     and cropped to the laptop and her profile. It starts 91px down, which leaves the card
+     16px under the top edge. */
+  --photo-scale: calc(0.7 * var(--phone-zoom));
+  height: calc(743px * var(--photo-scale));
+}
+
+.laptop-scene {
+  --lid-x: 70.358%; /* where the thread leaves the laptop lid */
+  --lid-y: 46.89%;
+  --card-foot: 18.6%; /* the foot of the card, which is also the top of the thread */
+  position: absolute;
+  top: calc(130px * var(--photo-scale));
+  left: max(calc(50% - 1046px * var(--photo-scale)), calc(100% - 1376px * var(--photo-scale)));
+  width: calc(1376px * var(--photo-scale));
+  aspect-ratio: 1376 / 768;
+  background: url("/images/photo-hero.webp") 0 0 / 100% 100% no-repeat;
+}
+
+/* Mobile: the top of the photo fades into the plate, behind the card. */
+.laptop-shade {
+  background-image: linear-gradient(in oklab 180deg, var(--color-grey-3) 0%, transparent 13.6%);
+}
+
+@media (min-width: 68.75rem) {
+  /* The hero fills the first screen, so the button is never below the fold: as tall as the window,
+     but no taller than it was drawn (900px, and less on narrow windows, like the other heroes). */
+  .laptop-hero {
+    min-height: clamp(600px, 100svh, calc(900px - (1 - var(--art-zoom)) * 500px));
+  }
+
+  .laptop-stage {
+    /* The plate stands 24px in from the window at 1440 wide, easing down to 16px at 1280 and below.
+       The copy on it is padded by the rest of the page gutter. */
+    --laptop-edge: clamp(1rem, calc(1rem + (100vw - 80rem) * 0.05), 1.5rem);
+    /* Above the headline: 96px in a 900px window, easing down to 64px in a short one. */
+    --laptop-top: clamp(4rem, calc(12svh - 0.75rem), 6rem);
+    /* The headline: 72px at 1440 wide, 48px at 1100. A short window holds it back too,
+       so the copy always ends above the foot of the plate. */
+    --laptop-display: clamp(
+      3rem,
+      min(calc(3rem + (100vw - 68.75rem) * 0.0706), calc(31.58svh - 8.125rem)),
+      4.5rem
+    );
+  }
+
+  .laptop-plate {
+    height: auto;
+    container-type: size;
+  }
+
+  /* Desktop: the photo covers the plate, held to its top right corner, as in Paper. On a wide,
+     short plate it stops growing before the laptop's base would be cut off at the bottom;
+     the strip this leaves on the left is the dark end of the photo, the colour of the plate. */
+  .laptop-scene {
+    --card-foot: 39.801%;
+    --scene-w: clamp(100cqh * 1376 / 768, 100cqw, 100cqh * 1376 / 600);
+    top: 0;
+    right: 0;
+    left: auto;
+    width: var(--scene-w);
+  }
+
+  /* The room runs across the whole photo, so the shade can be long and gentle, the same one the
+     final section uses: the wall is faintly there behind the headline and grows towards the laptop.
+     A short, steep shade makes the picture look as if it starts halfway across. */
+  .laptop-shade {
+    background-image: linear-gradient(
+      in oklab 90deg,
+      oklab(14.5% 0 0) 0%,
+      oklab(14.5% 0 0 / 80%) 14%,
+      oklab(14.5% 0 0 / 50%) 30%,
+      oklab(14.5% 0 0 / 20%) 44%,
+      oklab(14.5% 0 0 / 0%) 56%
+    );
+  }
+}
+
+/* The keyword on the laptop screen. The photo has an empty field; the letters are a patch cut
+   from the same photo and laid back in their place, so they are the photo's own type. */
+.laptop-field {
+  position: absolute;
+  top: 55.8594%;
+  left: 62.3547%;
+  width: 8.3576%;
+  height: 4.1667%;
+}
+
+/* --typed is how far the keyword is written, in % of the patch width, read at its top edge.
+   The screen is seen at an angle, so the letters lean: the cut is 5.11% further right at its foot. */
+.laptop-keyword {
+  position: absolute;
+  inset: 0;
+  background: url("/images/photo-hero-keyword.webp") 0 0 / 100% 100% no-repeat;
+  clip-path: polygon(
+    0 0,
+    calc(var(--typed) * 1%) 0,
+    calc(var(--typed) * 1% + 5.11%) 100%,
+    0 100%
+  );
+}
+
+/* The photo comes in two sizes: 1720px wide, which an ordinary screen never has to stretch,
+   and the full 2752px for sharper screens. app/page.tsx preloads it with the same split. */
+@media (min-resolution: 1.1dppx) {
+  .laptop-scene {
+    background-image: url("/images/photo-hero-large.webp");
+  }
+
+  .laptop-keyword {
+    background-image: url("/images/photo-hero-keyword-large.webp");
+  }
+}
+
+/* The cursor follows the cut, climbs with the baseline and leans with the letters.
+   It is drawn, not cut from the photo, in the colour of the photo's own cursor. */
+.laptop-caret {
+  position: absolute;
+  top: calc(48.61% - var(--typed) * 0.3968%);
+  left: calc(5.499% + var(--typed) * 0.9797%);
+  width: 0.652%;
+  height: 36.85%;
+  background: #dcd8ce;
+  rotate: -9.7deg;
+}
+
+.laptop-thread {
+  position: absolute;
+  top: var(--card-foot);
+  bottom: calc(100% - var(--lid-y));
+  left: var(--lid-x);
+}
+
+/* The card stands on the thread. Like the other drawn pictures, it shrinks as one piece. */
+.laptop-card {
+  position: absolute;
+  bottom: calc(100% - var(--card-foot));
+  left: calc(var(--lid-x) - 126px);
+  zoom: calc(0.8 * var(--phone-zoom));
+}
+
+@media (min-width: 68.75rem) {
+  /* Full size when the photo is as tall as in the design (804px), smaller as the photo gets smaller.
+     tan(atan2()) turns the two lengths into a plain number; the first line is for browsers without it. */
+  .laptop-card {
+    left: calc(var(--lid-x) - 173px);
+    zoom: var(--art-zoom);
+    zoom: min(1, tan(atan2(var(--scene-w) * 768 / 1376, 804px)));
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion
+------------------------------------------------------------------- */
+@keyframes draw-path {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Section entrance: a short fade with a small rise, once.
+   RevealController only arms blocks that are still below the window. */
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+[data-reveal="in"] {
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Plus that turns into a minus. */
+.pm {
+  flex-shrink: 0;
+}
+
+.pm-v {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 300ms var(--ease-out),
+    opacity 300ms var(--ease-out);
+}
+
+.pm[data-open="true"] .pm-v {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+/* ---------------- Hero loop: she types the keyword, the article comes out of the laptop ----------------
+   LaptopScene.tsx sets data-anim="on" and then one flag per step. With no flags at all
+   (no JavaScript, or reduced motion) the picture is simply shown finished. */
+/* The caret while the card's title is being typed. It is drawn out of the flow, at the end of
+   the letters written so far, so it can never push a word onto another line. It is the colour
+   of the text: there is no blue in this picture. */
+[data-typing="1"] > [data-on]::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 1px;
+  border-radius: 1px;
+  background: var(--color-text);
+  translate: 0 calc((1lh - 1.05em) / 2);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Before the script takes over, hold the pieces back so they do not flash in finished.
+     If the script never arrives they fade in by themselves. */
+  .laptop-plate:not([data-anim]) :is(.laptop-field, .laptop-thread, .laptop-card) {
+    animation: fade-in 300ms 2500ms both;
+  }
+
+  .laptop-caret {
+    animation: caret-blink 1.1s step-end infinite;
+  }
+
+  /* Steady while she types, as a real cursor is. */
+  .laptop-field[data-typing] .laptop-caret {
+    animation: none;
+  }
+
+  .laptop-field {
+    transition: opacity 320ms var(--ease-out);
+  }
+
+  /* The thread is drawn from the laptop lid upwards. */
+  .laptop-thread {
+    transform-origin: center bottom;
+    transition: transform 440ms var(--ease-out);
+  }
+
+  .laptop-card {
+    transition:
+      opacity 480ms var(--ease-out),
+      transform 480ms var(--ease-out);
+  }
+
+  .laptop-bar {
+    transform-origin: left center;
+    transition: transform 420ms var(--ease-out);
+  }
+
+  .laptop-bar:nth-child(2) {
+    transition-delay: 120ms;
+  }
+
+  .laptop-bar:nth-child(3) {
+    transition-delay: 240ms;
+  }
+
+  .laptop-score,
+  .laptop-done {
+    transition: opacity 320ms var(--ease-out);
+  }
+
+  .laptop-plate[data-anim="on"]:not([data-thread]) .laptop-thread {
+    transform: scaleY(0);
+  }
+
+  .laptop-plate[data-anim="on"]:not([data-card]) .laptop-card {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .laptop-plate[data-anim="on"]:not([data-bars]) .laptop-bar {
+    transform: scaleX(0);
+  }
+
+  .laptop-plate[data-anim="on"]:not([data-score]) .laptop-score,
+  .laptop-plate[data-anim="on"]:not([data-done]) .laptop-done {
+    opacity: 0;
+  }
+
+  /* The pause is over: the keyword, the thread and the article fade away before the next round. */
+  .laptop-plate[data-leave] :is(.laptop-field, .laptop-thread, .laptop-card) {
+    opacity: 0;
+    transition: opacity 380ms var(--ease-out);
+  }
+
+  .laptop-plate[data-reset] * {
+    transition: none !important;
+  }
+}
+
+/* ---------------- Mobile menu ---------------- */
+.menu {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 200ms var(--ease-out),
+    visibility 0s 200ms;
+}
+
+.menu[data-open="true"] {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 250ms var(--ease-out),
+    visibility 0s;
+}
+
+.menu-row {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+}
+
+.menu[data-open="true"] .menu-row {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 400ms var(--ease-out),
+    transform 400ms var(--ease-out);
+  transition-delay: calc(60ms + var(--i) * 45ms);
+}
+
+/* ---------------- Problem: three points, one open ---------------- */
+.points {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-white-14);
+}
+
+.point {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-block: 24px;
+  border-bottom: 1px solid var(--color-white-14);
+}
+
+.point-copy {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.point-text {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0;
+  flex-direction: column;
+}
+
+.point-title {
+  color: var(--color-soft);
+  transition: color 300ms var(--ease-out);
+}
+
+.point-title button {
+  text-align: left;
+}
+
+/* A closed point is one big click target. */
+.point-title button[aria-expanded="false"]::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.point-icon {
+  display: flex;
+  width: 16px;
+  height: 28px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-quiet);
+  transition: color 300ms var(--ease-out);
+}
+
+.point[data-open="true"] .point-title,
+.point[data-open="true"] .point-icon {
+  color: var(--color-text);
+}
+
+.point-desc,
+.point-picture {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 450ms var(--ease-in-out);
+}
+
+.point[data-open="true"] .point-desc,
+.point[data-open="true"] .point-picture {
+  grid-template-rows: 1fr;
+}
+
+.point-desc > div,
+.point-picture > div {
+  min-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 200ms var(--ease-out),
+    visibility 0s 450ms;
+}
+
+.point[data-open="true"] .point-desc > div,
+.point[data-open="true"] .point-picture > div {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 400ms var(--ease-out) 120ms,
+    visibility 0s;
+}
+
+.point-desc p {
+  padding-top: 8px;
+}
+
+.point-plate-pad {
+  padding-top: 24px;
+}
+
+.point-plate {
+  display: flex;
+  height: 264px;
+  justify-content: flex-end;
+  overflow: clip;
+  border-radius: 12px;
+  padding: 32px 0 0 32px;
+}
+
+@media (min-width: 68.75rem) {
+  /* Sideways: the open column takes the free width, the others stay narrow.
+     Only flex-grow moves, and the two values always add up to 1. */
+  .points {
+    --closed-w: 208px;
+    --copy-w: clamp(232px, 18.889vw, 272px);
+    --point-gap: clamp(32px, 3.333vw, 48px);
+    height: 400px;
+    flex-direction: row;
+    border-bottom: 1px solid var(--color-white-14);
+    container-type: inline-size;
+  }
+
+  .point {
+    --col-pad: 65px;
+    flex: 0 0 var(--closed-w);
+    flex-direction: row;
+    gap: var(--point-gap);
+    overflow: hidden;
+    padding: 32px 32px 0;
+    border-bottom: 0;
+    border-left: 1px solid var(--color-white-14);
+    transition: flex-grow 600ms var(--ease-in-out);
+  }
+
+  .point:first-child {
+    --col-pad: 32px;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .point:last-child {
+    --col-pad: 33px;
+    padding-right: 0;
+  }
+
+  .point[data-open="true"] {
+    flex-grow: 1;
+  }
+
+  .point-copy {
+    width: min(var(--copy-w), 100%);
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 32px;
+  }
+
+  .point-text {
+    flex: 0 0 auto;
+  }
+
+  .point-icon {
+    height: 16px;
+  }
+
+  .point-desc {
+    display: block;
+  }
+
+  .point-desc > div {
+    overflow: visible;
+    transition:
+      opacity 150ms var(--ease-out),
+      visibility 0s 150ms;
+  }
+
+  .point[data-open="true"] .point-desc > div {
+    transition:
+      opacity 400ms var(--ease-out) 200ms,
+      visibility 0s;
+  }
+
+  /* The picture keeps its final width and is uncovered as the column grows. */
+  .point-picture {
+    position: relative;
+    display: block;
+    min-width: 0;
+    flex: 1 1 0;
+    overflow: clip;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .point-picture > div {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: calc(
+      100cqw - 2 * var(--closed-w) - var(--col-pad) - var(--copy-w) - var(--point-gap)
+    );
+    overflow: visible;
+    transition:
+      opacity 250ms var(--ease-out),
+      visibility 0s 600ms;
+  }
+
+  .point[data-open="true"] .point-picture > div {
+    transition:
+      opacity 500ms var(--ease-out) 100ms,
+      visibility 0s;
+  }
+
+  .point-plate-pad {
+    height: 100%;
+    padding-top: 0;
+  }
+
+  .point-plate {
+    height: 100%;
+    border-radius: 12px 12px 0 0;
+    padding: 40px 0 0 clamp(24px, 3.333vw, 48px);
+  }
+}
+
+/* ---------------- How it works (desktop tabs) ---------------- */
+.hiw-step {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.hiw-track {
+  display: block;
+  height: 2px;
+  align-self: stretch;
+  overflow: hidden;
+  background: var(--color-white-14);
+  transition: background-color 400ms var(--ease-out);
+}
+
+.hiw-step[data-state="done"] .hiw-track {
+  background: var(--color-white-60);
+}
+
+.hiw-progress {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--color-blue);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.hiw-num {
+  color: var(--color-quiet);
+  transition: color 300ms var(--ease-out);
+}
+
+.hiw-title {
+  color: var(--color-soft);
+  transition: color 300ms var(--ease-out);
+}
+
+.hiw-step[data-state="current"] .hiw-num,
+.hiw-step[data-state="current"] .hiw-title {
+  color: var(--color-text);
+}
+
+.hiw-desc {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 200ms var(--ease-out),
+    visibility 0s 200ms;
+}
+
+.hiw-step[data-state="current"] .hiw-desc {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 400ms var(--ease-out) 80ms,
+    visibility 0s;
+}
+
+.hiw-screen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out);
+}
+
+.hiw-screen[data-active="true"] {
+  opacity: 1;
+}
+
+@keyframes fill-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Timed: only desktop windows too short to pin the stage. */
+@media (max-height: 619.98px) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* The blue line is the clock: when it is full, the next step starts. */
+    .hiw-step[data-state="current"] .hiw-progress {
+      animation: fill-x 6s linear forwards paused;
+    }
+
+    .hiw-stage[data-inview="true"] .hiw-step[data-state="current"] .hiw-progress {
+      animation-play-state: running;
+    }
+
+    .hiw-stage:has(:focus-visible) .hiw-step[data-state="current"] .hiw-progress {
+      animation-play-state: paused;
+    }
+
+    @media (hover: hover) {
+      .hiw-stage:hover .hiw-step[data-state="current"] .hiw-progress {
+        animation-play-state: paused;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* No clock. Show the line as it is drawn in the design. */
+    .hiw-step[data-state="current"] .hiw-progress {
+      transform: scaleX(0.5);
+    }
+  }
+}
+
+/* Pinned: the stage holds in the middle of the window while the page scrolls through the
+   four steps, and the next section only arrives after step 4. Plain sticky positioning,
+   so the scroll itself is never taken over. StepTabs measures the two variables. */
+@media (min-width: 68.75rem) and (min-height: 620px) {
+  .hiw-pin {
+    position: sticky;
+    /* Centred in the window. On a window shorter than the stage, the stage stops 24px under the
+       top edge instead, so the step titles are never cut off; the picture runs off the bottom. */
+    top: min(
+      0px,
+      calc(max(24px, (100vh - var(--hiw-stage, 720px)) / 2) - var(--hiw-offset, 288px))
+    );
+  }
+
+  .hiw-runway {
+    height: 200vh;
+  }
+
+  .hiw-step[data-state="current"] .hiw-progress {
+    transform: scaleX(var(--p, 0));
+  }
+}
+
+/* ---------------- Search data: lines draw, then the outline rows appear ---------------- */
+.sd-flow {
+  --z: 1;
+}
+
+.sd-stack {
+  position: relative;
+  height: 320px;
+  align-self: stretch;
+}
+
+.sd-card {
+  position: absolute;
+  top: calc(var(--k) * 24px);
+  left: calc(var(--k) * 24px);
+  display: flex;
+  width: calc(100% - 72px);
+  height: 248px;
+  flex-direction: column;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 12px;
+}
+
+.sd-line {
+  fill: none;
+  stroke: var(--color-blue-70);
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  vector-effect: non-scaling-stroke;
+}
+
+[data-stage="pending"] .sd-line {
+  stroke-dashoffset: 1;
+}
+
+[data-stage="pending"] .sd-row {
+  opacity: 0;
+}
+
+[data-stage="in"] .sd-line {
+  animation: draw-path 700ms var(--ease-out) both;
+  animation-delay: calc(100ms + var(--i) * 120ms);
+}
+
+[data-stage="in"] .sd-row {
+  animation: settle 450ms var(--ease-out) both;
+  animation-delay: calc(800ms + var(--i) * 110ms);
+}
+
+@media (min-width: 68.75rem) {
+  .sd-flow {
+    --z: var(--art-zoom);
+    zoom: var(--z);
+  }
+
+  .sd-stack {
+    width: 304px;
+    height: 400px;
+    flex-shrink: 0;
+    align-self: auto;
+  }
+
+  .sd-card {
+    top: calc(var(--k) * 32px);
+    width: 232px;
+    height: 304px;
+  }
+
+  /* 120 wide at 1440, 56 from 1280 down, so the three parts always fit the row. */
+  .sd-lines-d {
+    width: clamp(56px, calc(56px + (100vw - 80rem) * 0.4), 120px);
+  }
+
+  /* The notes sit beside drawn parts, so their offsets follow the zoom. */
+  .sd-note-1 {
+    width: clamp(176px, calc(176px + (100vw - 68.75rem) * 0.2222), 216px);
+    padding-top: calc(110px * var(--art-zoom) - 14px);
+  }
+
+  .sd-notes {
+    padding-top: calc(78px * var(--art-zoom) - 14px);
+  }
+
+  .sd-note-2 {
+    height: calc(256px * var(--art-zoom));
+  }
+}
+
+/* ---------------- Features ---------------- */
+.feature-title {
+  color: var(--color-quiet);
+  transition: color 300ms var(--ease-out);
+}
+
+.feature[data-active="true"] .feature-title {
+  color: var(--color-text);
+}
+
+.feature-desc {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 450ms var(--ease-in-out);
+}
+
+.feature[data-active="true"] .feature-desc {
+  grid-template-rows: 1fr;
+}
+
+.feature-desc > * {
+  min-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 200ms var(--ease-out),
+    visibility 0s 450ms;
+}
+
+.feature[data-active="true"] .feature-desc > * {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 400ms var(--ease-out) 120ms,
+    visibility 0s;
+}
+
+.feature-track {
+  display: block;
+  height: 1px;
+  align-self: stretch;
+  overflow: hidden;
+  background: var(--color-white-14);
+}
+
+.feature[data-active="true"] .feature-track {
+  height: 2px;
+}
+
+.feature-progress {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--color-blue);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.feature[data-active="true"] .feature-progress {
+  opacity: 1;
+}
+
+.feature-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out);
+}
+
+.feature-layer[data-active="true"] {
+  opacity: 1;
+}
+
+/* Timed: phones, and desktop windows too short to pin the stage. */
+@media (max-width: 68.74rem), (max-height: 619.98px) {
+  @media (prefers-reduced-motion: no-preference) {
+    .feature[data-active="true"] .feature-progress {
+      animation: fill-x 6s linear forwards paused;
+    }
+
+    .features-stage[data-inview="true"] .feature[data-active="true"] .feature-progress {
+      animation-play-state: running;
+    }
+
+    .features-stage:has(:focus-visible) .feature[data-active="true"] .feature-progress {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* No clock. Show the line as it is drawn in the design: 96px. */
+    .feature[data-active="true"] .feature-progress {
+      width: 96px;
+      transform: none;
+    }
+  }
+}
+
+/* Pinned: the section holds still while the page scrolls through the four features.
+   Plain sticky positioning, so the scroll itself is never taken over. */
+@media (min-width: 68.75rem) and (min-height: 620px) {
+  /* Short windows: only the 560px stage is held, centred, and the heading has scrolled away. */
+  .features-pin {
+    position: sticky;
+    top: min(calc((100vh - 560px) / 2 - 260px), -204px);
+  }
+
+  .features-runway {
+    height: 200vh;
+  }
+
+  .feature[data-active="true"] .feature-progress {
+    transform: scaleX(var(--p, 0));
+  }
+}
+
+@media (min-width: 68.75rem) and (min-height: 750px) {
+  /* Tall enough for the heading too: hold the whole section, centred when it fits. */
+  .features-pin {
+    top: min(calc((100vh - 916px) / 2), calc(100vh - 844px));
+  }
+}
+
+/* ---------------- FAQ ---------------- */
+.faq-button {
+  padding-block: 24px;
+  transition: padding-bottom 400ms var(--ease-in-out);
+}
+
+.faq-item[data-open="true"] .faq-button {
+  padding-bottom: 8px;
+}
+
+.faq-icon {
+  color: var(--color-quiet);
+  transition: color 300ms var(--ease-out);
+}
+
+.faq-item[data-open="true"] .faq-icon {
+  color: var(--color-text);
+}
+
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms var(--ease-in-out);
+}
+
+.faq-item[data-open="true"] .faq-panel {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel > div {
+  min-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 200ms var(--ease-out),
+    visibility 0s 400ms;
+}
+
+.faq-item[data-open="true"] .faq-panel > div {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 400ms var(--ease-out) 100ms,
+    visibility 0s;
+}
+
+/* ------------------------------------------------------------------
+   App screens: the dashboard and the article screen. Both sit on the same
+   blue film as the landing page. Crops and overlays are copied from Paper.
+------------------------------------------------------------------- */
+.film-desk,
+.film-cover {
+  background-color: var(--color-film);
+  background-origin: border-box;
+  background-repeat: no-repeat;
+}
+
+/* The dashboard's left column. */
+.film-desk {
+  background-image:
+    linear-gradient(
+      in oklab 180deg,
+      oklab(14.5% 0 0 / 85%) 0%,
+      oklab(14.5% 0 0 / 60%) 35%,
+      oklab(14.5% 0 0 / 40%) 100%
+    ),
+    url("/images/film-blue.webp");
+  background-position:
+    50%,
+    94% 9%;
+  background-size:
+    cover,
+    auto 220%;
+}
+
+/* The desk's own spacing. Below the desktop breakpoint it is a plain block with fixed gaps. */
+.app-desk {
+  --desk-pad: 2rem;
+  --desk-gap: 3rem; /* logo to greeting, and top group to bottom group */
+  --desk-gap-2: 2rem; /* greeting to "Let's write something new" */
+  --desk-gap-3: 1.5rem; /* that line to the button */
+  --desk-foot: 2rem; /* the two panels to the credits */
+  --desk-greet: 2.25rem;
+  --panel-pad: 1rem;
+}
+
+/* Desktop: the desk fills the window's height and stays put while the articles scroll, so
+   nothing on it is ever below the fold. Its gaps and its greeting follow the window height:
+   as drawn (the larger values) from about 800px tall, and tightest at about 608px. */
+@media (min-width: 68.75rem) {
+  .app-desk {
+    --desk-pad: clamp(1.5rem, calc(1.5rem + (100svh - 38rem) * 0.0417), 2rem);
+    --desk-gap: clamp(1.5rem, calc(1.5rem + (100svh - 38rem) * 0.2083), 4rem);
+    --desk-gap-2: clamp(1.5rem, calc(1.5rem + (100svh - 38rem) * 0.125), 3rem);
+    --desk-gap-3: clamp(1rem, calc(1rem + (100svh - 38rem) * 0.0417), 1.5rem);
+    --desk-foot: clamp(1rem, calc(1rem + (100svh - 38rem) * 0.0833), 2rem);
+    --desk-greet: clamp(2rem, calc(2rem + (100svh - 38rem) * 0.0625), 2.75rem);
+    --panel-pad: clamp(0.75rem, calc(0.75rem + (100svh - 38rem) * 0.0208), 1rem);
+  }
+}
+
+/* A window shorter than 600px cannot hold the desk even at its tightest, so there it is
+   simply as tall as what is on it and scrolls with the page. */
+@media (min-width: 68.75rem) and (min-height: 37.5rem) {
+  .app-desk {
+    position: sticky;
+    top: 1rem;
+    height: calc(100svh - 2rem);
+  }
+}
+
+/* The article screen's cover: bright film at the top, darker towards the checks. */
+.film-cover {
+  background-image:
+    linear-gradient(
+      in oklab 180deg,
+      oklab(14.5% 0 0 / 8%) 0%,
+      oklab(14.5% 0 0 / 56%) 46%,
+      oklab(14.5% 0 0 / 88%) 100%
+    ),
+    url("/images/film-blue.webp");
+  background-position:
+    50%,
+    68% 0%;
+  background-size:
+    cover,
+    auto 210%;
+}
+
+/* Between 1100 and 1440 the cover is laid out at 1280px or more, so the five groups sit side by
+   side with air between them. On a window narrower than that, it is scaled down as one piece to
+   fit, the way the drawn pictures on the landing page are. tan(atan2()) turns the two lengths
+   into a plain number; the first line is for browsers without it. */
+.cover-fit {
+  container-type: inline-size;
+}
+
+@media (min-width: 68.75rem) and (max-width: 89.99rem) {
+  .film-cover {
+    zoom: 0.82;
+    zoom: min(1, tan(atan2(100cqw, 1280px)));
+  }
+}
+
+/* The slim bar that takes over from the cover. It is out of view until the cover has scrolled away. */
+.cover-bar {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-100%);
+  transition:
+    transform 300ms var(--ease-out),
+    opacity 200ms var(--ease-out),
+    visibility 0s 300ms;
+}
+
+.cover-bar[data-shown="true"] {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition:
+    transform 300ms var(--ease-out),
+    opacity 200ms var(--ease-out),
+    visibility 0s;
+}
+
+/* The checks that dock beside the article, on the same cue as the bar. */
+.cover-dock {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 250ms var(--ease-out),
+    transform 300ms var(--ease-out),
+    visibility 0s 300ms;
+}
+
+.cover-dock[data-shown="true"] {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 250ms var(--ease-out) 100ms,
+    transform 300ms var(--ease-out) 100ms,
+    visibility 0s;
+}
+
+/* The score line draws itself once, then its mark appears. */
+@media (prefers-reduced-motion: no-preference) {
+  .cover-fill {
+    transform-origin: left center;
+    animation: fill-x 900ms var(--ease-out) 150ms both;
+  }
+
+  .cover-mark {
+    animation: fade-in 300ms var(--ease-out) 950ms both;
+  }
+}
+
+} /* end @layer components */
+
+/* ------------------------------------------------------------------
+   Reduced motion: final states, no movement.
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
