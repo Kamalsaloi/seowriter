@@ -216,7 +216,8 @@ export function Features() {
   const inView = useInView(stageRef, 0.3);
   const id = useId();
 
-  // Desktop: the scroll position picks the feature and fills its blue line.
+  // Desktop only; a phone shows all four features at once (see the list at the end).
+  // The scroll position picks the feature and fills its blue line.
   // The line is written straight to a CSS variable; React only hears about it
   // when the feature changes.
   useEffect(() => {
@@ -312,13 +313,13 @@ export function Features() {
               ref={stageRef}
               data-reveal=""
               data-inview={inView}
-              className="features-stage flex flex-col-reverse gap-8 desk:flex-row desk:items-start desk:gap-16"
+              className="features-stage hidden items-start gap-16 desk:flex"
             >
               <div
                 role="tablist"
                 aria-orientation="vertical"
                 aria-label="Everything you need to publish content that performs"
-                className="flex flex-col gap-6 desk:w-[320px] desk:shrink-0"
+                className="flex w-[320px] shrink-0 flex-col gap-6"
               >
                 {FEATURES.map((feature, i) => {
                   const isActive = i === active;
@@ -364,7 +365,7 @@ export function Features() {
                 role="tabpanel"
                 id={`${id}-panel`}
                 aria-labelledby={`${id}-tab-${active}`}
-                className="relative h-[440px] shrink-0 overflow-clip rounded-lg bg-grey-3 desk:h-[560px] desk:min-w-0 desk:flex-1"
+                className="relative h-[560px] min-w-0 flex-1 shrink-0 overflow-clip rounded-lg bg-grey-3"
               >
                 {FEATURES.map((feature, i) => (
                   <div
@@ -374,13 +375,39 @@ export function Features() {
                     aria-hidden={i !== active}
                     data-active={i === active}
                     style={{ "--photo": `url("${feature.photo}")` } as CSSProperties}
-                    className="feature-layer feature-photo flex flex-col items-start justify-end gap-2 p-4 desk:justify-center desk:gap-4 desk:p-12"
+                    className="feature-layer feature-photo flex flex-col items-start justify-center gap-4 p-12"
                   >
                     {feature.piece}
                   </div>
                 ))}
               </div>
             </div>
+
+            {/* Mobile: the four features one under another, each with its own picture,
+                so no feature is hidden behind a tap. */}
+            <ol className="flex flex-col gap-12 desk:hidden">
+              {FEATURES.map((feature) => (
+                <li
+                  key={feature.title}
+                  data-reveal=""
+                  className="flex flex-col gap-6 border-t border-white-14 pt-6"
+                >
+                  <div className="flex flex-col gap-2">
+                    <h3 className="text-title font-medium tracking-title text-text">
+                      {feature.title}
+                    </h3>
+                    <p className="text-body text-soft">{feature.text}</p>
+                  </div>
+                  <div
+                    aria-hidden="true"
+                    style={{ "--photo": `url("${feature.photo}")` } as CSSProperties}
+                    className="feature-photo flex h-[440px] shrink-0 flex-col items-start justify-end gap-2 overflow-clip rounded-lg p-4"
+                  >
+                    {feature.piece}
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
         <div aria-hidden="true" className="features-runway" />

@@ -448,7 +448,7 @@
   --photo-size-d: cover;
 }
 
-/* Feature photos: one layer per feature, crossfaded. */
+/* Feature photos. Desktop: one layer per feature, crossfaded. Mobile: one plate per feature. */
 .feature-photo {
   background-color: var(--color-grey-3);
   background-image:
@@ -1363,8 +1363,8 @@
   opacity: 1;
 }
 
-/* Timed: phones, and desktop windows too short to pin the stage. */
-@media (max-width: 68.74rem), (max-height: 619.98px) {
+/* Timed: only desktop windows too short to pin the stage. */
+@media (max-height: 619.98px) {
   @media (prefers-reduced-motion: no-preference) {
     .feature[data-active="true"] .feature-progress {
       animation: fill-x 6s linear forwards paused;

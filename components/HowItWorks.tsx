@@ -457,7 +457,8 @@ const SCREENS_WIDE: ReactNode[] = [
           <Bar h={6} stretch />
         </div>
       </div>
-      <div className="flex w-[248px] shrink-0 flex-col gap-4">
+      {/* 8px lower than the article, so the last line clears the foot of the picture and is not cut in half. */}
+      <div className="flex w-[248px] shrink-0 flex-col gap-4 pt-2">
         <CheckGroup as="p" title="STRUCTURE" checks={STRUCTURE_CHECKS} className="w-full" />
         <span className="block h-px shrink-0 bg-white-8" />
         <CheckGroup

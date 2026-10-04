@@ -52,7 +52,7 @@ All tokens are in `app/globals.css`, in the `@theme` block: colours, radii, type
 | `components/Problem.tsx` | Three points that open on hover: sideways on desktop, stacked on mobile |
 | `components/HowItWorks.tsx` | Desktop: pinned while the page scrolls through four steps. Mobile: four stacked steps |
 | `components/SearchData.tsx` | Diagram whose lines draw in when it enters the view |
-| `components/Features.tsx` | Desktop: pinned while the page scrolls through four features. Mobile: tap, with a timed line |
+| `components/Features.tsx` | Desktop: pinned while the page scrolls through four features. Mobile: four stacked features, each with its picture |
 | `components/Pricing.tsx`, `Faq.tsx`, `FinalCta.tsx`, `Footer.tsx` | The remaining sections |
 | `components/Dashboard.tsx`, `RecentArticles.tsx` | Dashboard: the film desk and the ledger of articles with its search |
 | `components/ArticleCover.tsx`, `CoverBar.tsx`, `ArticleActions.tsx` | Article screen: the cover, the slim bar and docked checks, the two buttons |
