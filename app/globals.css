@@ -1497,21 +1497,34 @@
   --desk-gap-3: 1.5rem; /* that line to the button */
   --desk-foot: 2rem; /* the two panels to the credits */
   --desk-greet: 2.25rem;
+  --desk-greet-max: 17.5rem; /* the greeting breaks after "Good morning" */
   --panel-pad: 1rem;
 }
 
 /* Desktop: the desk fills the window's height and stays put while the articles scroll, so
-   nothing on it is ever below the fold. Its gaps and its greeting follow the window height:
-   as drawn (the larger values) from about 800px tall, and tightest at about 608px. */
+   nothing on it is ever below the fold. It reads as two blocks: everything down to the button,
+   then the two panels with the credits. The gaps inside a block stay small on a short window,
+   so the spare height goes between the blocks. Tightest up to 672px tall, and as drawn (the
+   larger values) from about 900px. */
 @media (min-width: 68.75rem) {
   .app-desk {
-    --desk-pad: clamp(1.5rem, calc(1.5rem + (100svh - 38rem) * 0.0417), 2rem);
-    --desk-gap: clamp(1.5rem, calc(1.5rem + (100svh - 38rem) * 0.2083), 4rem);
-    --desk-gap-2: clamp(1.5rem, calc(1.5rem + (100svh - 38rem) * 0.125), 3rem);
-    --desk-gap-3: clamp(1rem, calc(1rem + (100svh - 38rem) * 0.0417), 1.5rem);
-    --desk-foot: clamp(1rem, calc(1rem + (100svh - 38rem) * 0.0833), 2rem);
-    --desk-greet: clamp(2rem, calc(2rem + (100svh - 38rem) * 0.0625), 2.75rem);
-    --panel-pad: clamp(0.75rem, calc(0.75rem + (100svh - 38rem) * 0.0208), 1rem);
+    --desk-pad: clamp(1.5rem, calc(1.5rem + (100svh - 42rem) * 0.0351), 2rem);
+    --desk-gap: clamp(1.5rem, calc(1.5rem + (100svh - 42rem) * 0.1754), 4rem);
+    /* The line sits two to three times closer to its button than to the greeting above it,
+       so the line and the button read as one pair. */
+    --desk-gap-2: clamp(1.5rem, calc(1.5rem + (100svh - 42rem) * 0.1053), 3rem);
+    --desk-gap-3: clamp(0.5rem, calc(0.5rem + (100svh - 42rem) * 0.0702), 1.5rem);
+    --desk-foot: clamp(1rem, calc(1rem + (100svh - 42rem) * 0.0702), 2rem);
+    --desk-greet: clamp(2rem, calc(2rem + (100svh - 42rem) * 0.0526), 2.75rem);
+    --panel-pad: clamp(0.75rem, calc(0.75rem + (100svh - 42rem) * 0.0175), 1rem);
+  }
+}
+
+/* A short desktop window: the greeting sits on one line, which frees a line of height for the
+   space between the two blocks. */
+@media (min-width: 68.75rem) and (max-height: 41.99rem) {
+  .app-desk {
+    --desk-greet-max: none;
   }
 }
 

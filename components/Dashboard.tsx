@@ -94,7 +94,7 @@ export function Dashboard() {
         <div className="flex flex-col gap-(--desk-gap)">
           <LogoMark />
           <div className="flex flex-col gap-(--desk-gap-2)">
-            <h1 className="max-w-[280px] text-(length:--desk-greet) leading-[calc(50/44)] font-light tracking-[-0.03em] text-text">
+            <h1 className="max-w-(--desk-greet-max) text-(length:--desk-greet) leading-[calc(50/44)] font-light tracking-[-0.03em] text-text">
               Good morning Rituraj
             </h1>
             <div className="flex flex-col items-start gap-(--desk-gap-3)">
